@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoFix – Mechanic Dashboard</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/mechanic_style.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="sticky top-0 z-50 shadow-lg">
+  <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+    <div class="flex items-center gap-2">
+      <span class="text-2xl">🔧</span>
+      <span class="brand text-white">AutoFix</span>
+      <span class="text-green-400 text-sm ml-1">· Mechanic</span>
+    </div>
+    <div class="flex items-center gap-5">
+      <div class="toggle-wrap">
+        <label class="toggle">
+          <input type="checkbox" id="onlineToggle" checked onchange="toggleStatus(this)">
+          <span class="slider"></span>
+        </label>
+        <span class="status-label text-white" id="statusLabel">🟢 Online</span>
+      </div>
+      <a href="customer.html" class="text-xs bg-white/10 text-white px-3 py-1.5 rounded-lg border border-white/20 hover:bg-white/20 transition font-medium">← Customer View</a>
+    </div>
+  </div>
+</nav>
+
+<!-- OFFLINE BANNER -->
+<div id="offlineBanner" class="hidden bg-yellow-50 border-b border-yellow-200 text-yellow-800 text-center py-2 text-sm font-medium">
+  ⚠️ You are currently <strong>Offline</strong>. Toggle to Online to receive new requests.
+</div>
+
+<div class="max-w-6xl mx-auto px-4 py-8 space-y-10">
+
+  <!-- STATS ROW -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <div class="stat-card p-5">
+      <div class="val" id="completedCount">5</div>
+      <div class="lbl">Jobs Today</div>
+    </div>
+    <div class="stat-card p-5">
+      <div class="val" id="earningsDisplay">₹2500</div>
+      <div class="lbl">Today's Earnings</div>
+    </div>
+    <div class="stat-card p-5" style="background:linear-gradient(135deg,#1e3a5f,#1a4db5)">
+      <div class="val">4.8</div>
+      <div class="lbl">Rating ⭐</div>
+    </div>
+    <div class="stat-card p-5" style="background:linear-gradient(135deg,#4c1d95,#7c3aed)">
+      <div class="val" id="reqCount">3</div>
+      <div class="lbl">Pending Requests</div>
+    </div>
+  </div>
+
+  <!-- INCOMING REQUESTS -->
+  <section>
+    <h2 class="section-title mb-5">📥 Incoming Requests</h2>
+    <div class="space-y-4" id="requestList">
+
+      <!-- Request 1 -->
+      <div class="card req-card p-5 fade-in" id="req-1">
+        <div class="flex flex-wrap justify-between gap-3 mb-3">
+          <div>
+            <div class="flex items-center gap-2 mb-0.5">
+              <span class="font-bold text-base heading">Arjun Mehta</span>
+              <span class="badge badge-pending">Pending</span>
+            </div>
+            <p class="text-sm text-muted">📍 Kothrud, Pune · 🕐 Today, 10:30 AM</p>
+          </div>
+          <div class="text-right">
+            <p class="text-xs text-muted">Service</p>
+            <p class="font-semibold text-green-700">Battery Issue</p>
+          </div>
+        </div>
+        <p class="text-sm text-gray-600 bg-gray-50 p-3 rounded-lg mb-4 italic">"Car won't start, battery seems completely dead. Need urgent help."</p>
+        <div class="flex gap-3">
+          <button class="btn-accept px-6 py-2 text-sm" onclick="acceptRequest(1)">✓ Accept</button>
+          <button class="btn-reject px-6 py-2 text-sm" onclick="rejectRequest(1)">✕ Reject</button>
+        </div>
+      </div>
+
+      <!-- Request 2 -->
+      <div class="card req-card p-5 fade-in" id="req-2">
+        <div class="flex flex-wrap justify-between gap-3 mb-3">
+          <div>
+            <div class="flex items-center gap-2 mb-0.5">
+              <span class="font-bold text-base heading">Sneha Patil</span>
+              <span class="badge badge-pending">Pending</span>
+            </div>
+            <p class="text-sm text-muted">📍 Wakad, Pune · 🕐 Today, 11:00 AM</p>
+          </div>
+          <div class="text-right">
+            <p class="text-xs text-muted">Service</p>
+            <p class="font-semibold text-green-700">Puncture Repair</p>
+          </div>
+        </div>
+        <p class="text-sm text-gray-600 bg-gray-50 p-3 rounded-lg mb-4 italic">"Front right tyre is flat, stuck near highway. Please come ASAP."</p>
+        <div class="flex gap-3">
+          <button class="btn-accept px-6 py-2 text-sm" onclick="acceptRequest(2)">✓ Accept</button>
+          <button class="btn-reject px-6 py-2 text-sm" onclick="rejectRequest(2)">✕ Reject</button>
+        </div>
+      </div>
+
+      <!-- Request 3 -->
+      <div class="card req-card p-5 fade-in" id="req-3">
+        <div class="flex flex-wrap justify-between gap-3 mb-3">
+          <div>
+            <div class="flex items-center gap-2 mb-0.5">
+              <span class="font-bold text-base heading">Kiran Sharma</span>
+              <span class="badge badge-pending">Pending</span>
+            </div>
+            <p class="text-sm text-muted">📍 Baner, Pune · 🕐 Today, 2:00 PM</p>
+          </div>
+          <div class="text-right">
+            <p class="text-xs text-muted">Service</p>
+            <p class="font-semibold text-green-700">Oil Change</p>
+          </div>
+        </div>
+        <p class="text-sm text-gray-600 bg-gray-50 p-3 rounded-lg mb-4 italic">"Due for a full service and oil change. Prefer afternoon slot."</p>
+        <div class="flex gap-3">
+          <button class="btn-accept px-6 py-2 text-sm" onclick="acceptRequest(3)">✓ Accept</button>
+          <button class="btn-reject px-6 py-2 text-sm" onclick="rejectRequest(3)">✕ Reject</button>
+        </div>
+      </div>
+
+    </div>
+    <p class="text-sm text-muted mt-3 hidden" id="noRequests">No pending requests right now. Check back soon.</p>
+  </section>
+
+  <!-- ACCEPTED JOBS -->
+  <section>
+    <h2 class="section-title mb-5">✅ Accepted Jobs</h2>
+    <div class="space-y-4" id="acceptedList">
+      <p class="text-sm text-muted" id="noAccepted">No accepted jobs yet. Accept a request above.</p>
+    </div>
+  </section>
+
+  <!-- BILLING -->
+  <!-- <section>
+    <h2 class="section-title mb-5">💰 Billing</h2>
+    <div class="card p-6 max-w-md">
+      <p class="text-sm text-muted mb-4">Enter the cost for the completed job and generate a bill for the customer.</p>
+      <div class="flex gap-3 items-end">
+        <div class="flex-1">
+          <label class="text-sm font-semibold text-gray-600 mb-1 block">Enter Cost (₹)</label>
+          <input type="number" id="costInput" placeholder="e.g. 650" min="0">
+        </div>
+        <button class="btn-green px-5 py-[10px] text-sm whitespace-nowrap" onclick="generateBill()">Generate Bill</button>
+      </div>
+      <div id="billResult" class="hidden mt-4 bg-green-50 border border-green-200 rounded-xl p-4 fade-in">
+        <div class="flex justify-between items-center">
+          <div>
+            <p class="text-xs text-green-600 font-semibold mb-0.5">BILL GENERATED</p>
+            <p class="text-2xl font-black text-green-800 heading" id="billAmount"></p>
+          </div>
+          <div class="text-3xl">🧾</div>
+        </div>
+        <div class="mt-3 border-t border-green-200 pt-3 text-xs text-green-700 space-y-1">
+          <div class="flex justify-between"><span>Service Charge</span><span id="serviceCharge"></span></div>
+          <div class="flex justify-between"><span>Platform Fee (5%)</span><span id="platformFee"></span></div>
+          <div class="flex justify-between font-bold text-sm"><span>Total</span><span id="billTotal"></span></div>
+        </div>
+      </div>
+    </div>
+  </section> -->
+
+  <!-- DAILY SUMMARY -->
+  <!-- <section>
+    <h2 class="section-title mb-5">📊 Daily Summary</h2>
+    <div class="grid md:grid-cols-3 gap-4">
+      <div class="card p-5">
+        <p class="text-xs text-muted mb-1">Jobs Completed</p>
+        <p class="text-3xl font-black heading text-green-700" id="summaryJobs">5</p>
+        <p class="text-xs text-green-500 mt-1">+2 from yesterday</p>
+      </div>
+      <div class="card p-5">
+        <p class="text-xs text-muted mb-1">Total Earnings</p>
+        <p class="text-3xl font-black heading text-green-700" id="summaryEarnings">₹2,500</p>
+        <p class="text-xs text-green-500 mt-1">Avg ₹500/job</p>
+      </div>
+      <div class="card p-5">
+        <p class="text-xs text-muted mb-1">Customer Rating</p>
+        <p class="text-3xl font-black heading text-yellow-500">4.8 ⭐</p>
+        <p class="text-xs text-muted mt-1">Based on 12 reviews</p>
+      </div>
+    </div>
+  </section> -->
+</div>
+<!-- FOOTER -->
+<footer class="mt-16 bg-green-950 text-green-300 text-center py-6 text-xs">
+  © 2025 AutoFix · Mechanic Dashboard · College Prototype
+</footer>
+<script src="scripts/mechanic.js"></script>
+</body>
+</html>
