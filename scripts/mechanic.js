@@ -99,18 +99,4 @@
     }
   }
 
-  function generateBill() {
-    const raw = parseFloat(document.getElementById('costInput').value);
-    if (!raw || raw <= 0) { alert('Please enter a valid cost.'); return; }
-    const fee = Math.round(raw * 0.05);
-    const total = raw + fee;
-    document.getElementById('serviceCharge').textContent = '₹' + raw;
-    document.getElementById('platformFee').textContent = '₹' + fee;
-    document.getElementById('billTotal').textContent = '₹' + total;
-    document.getElementById('billAmount').textContent = '₹' + total;
-    document.getElementById('billResult').classList.remove('hidden');
-    // Update earnings
-    totalEarnings += raw;
-    document.getElementById('earningsDisplay').textContent = '₹' + totalEarnings;
-    document.getElementById('summaryEarnings').textContent = '₹' + totalEarnings.toLocaleString('en-IN');
-  }
+
